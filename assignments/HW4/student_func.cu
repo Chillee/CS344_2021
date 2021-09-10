@@ -1,12 +1,12 @@
-//Udacity HW 4
-//Radix Sorting
+// Udacity HW 4
+// Radix Sorting
 
 #include "utils.h"
 #include <thrust/host_vector.h>
 
 /* Red Eye Removal
    ===============
-   
+
    For this assignment we are implementing red eye removal.  This is
    accomplished by first creating a score for every pixel that tells us how
    likely it is to be a red eye pixel.  We have already done this for you - you
@@ -42,13 +42,9 @@
 
  */
 
-
-void your_sort(unsigned int* const d_inputVals,
-               unsigned int* const d_inputPos,
-               unsigned int* const d_outputVals,
-               unsigned int* const d_outputPos,
-               const size_t numElems)
-{ 
-  //TODO
-  //PUT YOUR SORT HERE
+void your_sort(unsigned int *const d_inputVals, unsigned int *const d_inputPos,
+               unsigned int *const d_outputVals,
+               unsigned int *const d_outputPos, const size_t numElems) {
+  // TODO
+  // PUT YOUR SORT HERE
 }

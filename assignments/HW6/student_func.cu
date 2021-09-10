@@ -1,5 +1,5 @@
-//Udacity HW 6
-//Poisson Blending
+// Udacity HW 6
+// Poisson Blending
 
 /* Background
    ==========
@@ -12,10 +12,10 @@
    The basic ideas are as follows:
 
    1) Figure out the interior and border of the source image
-   2) Use the values of the border pixels in the destination image 
+   2) Use the values of the border pixels in the destination image
       as boundary conditions for solving a Poisson equation that tells
       us how to blend the images.
-   
+
       No pixels from the destination except pixels on the border
       are used to compute the match.
 
@@ -28,7 +28,7 @@
    until it stops changing.  If the problem was well-suited for the method
    then it will stop and where it stops will be the solution.
 
-   The Jacobi method is the simplest iterative method and converges slowly - 
+   The Jacobi method is the simplest iterative method and converges slowly -
    that is we need a lot of iterations to get to the answer, but it is the
    easiest method to write.
 
@@ -48,33 +48,33 @@
 
    Follow these steps to implement one iteration:
 
-   1) For every pixel p in the interior, compute two sums over the four neighboring pixels:
-      Sum1: If the neighbor is in the interior then += ImageGuess_prev[neighbor]
-             else if the neighbor in on the border then += DestinationImg[neighbor]
+   1) For every pixel p in the interior, compute two sums over the four
+   neighboring pixels: Sum1: If the neighbor is in the interior then +=
+   ImageGuess_prev[neighbor] else if the neighbor in on the border then +=
+   DestinationImg[neighbor]
 
       Sum2: += SourceImg[p] - SourceImg[neighbor]   (for all four neighbors)
 
    2) Calculate the new pixel value:
-      float newVal= (Sum1 + Sum2) / 4.f  <------ Notice that the result is FLOATING POINT
-      ImageGuess_next[p] = min(255, max(0, newVal)); //clamp to [0, 255]
+      float newVal= (Sum1 + Sum2) / 4.f  <------ Notice that the result is
+   FLOATING POINT ImageGuess_next[p] = min(255, max(0, newVal)); //clamp to [0,
+   255]
 
 
     In this assignment we will do 800 iterations.
    */
 
-
-
 #include "utils.h"
 #include <thrust/host_vector.h>
 
-void your_blend(const uchar4* const h_sourceImg,  //IN
+void your_blend(const uchar4 *const h_sourceImg, // IN
                 const size_t numRowsSource, const size_t numColsSource,
-                const uchar4* const h_destImg, //IN
-                uchar4* const h_blendedImg) //OUT
+                const uchar4 *const h_destImg, // IN
+                uchar4 *const h_blendedImg)    // OUT
 {
 
   /* To Recap here are the steps you need to implement
-  
+
      1) Compute a mask of the pixels from the source image to be copied
         The pixels that shouldn't be copied are completely white, they
         have R=255, G=255, B=255.  Any other pixels SHOULD be copied.
@@ -89,7 +89,7 @@ void your_blend(const uchar4* const h_sourceImg,  //IN
         act as our guesses.  Initialize them to the respective color
         channel of the source image since that will act as our intial guess.
 
-     5) For each color channel perform the Jacobi iteration described 
+     5) For each color channel perform the Jacobi iteration described
         above 800 times.
 
      6) Create the output image by replacing all the interior pixels

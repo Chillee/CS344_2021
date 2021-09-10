@@ -24,31 +24,27 @@
 
 */
 
-
 #include "utils.h"
 
-__global__
-void yourHisto(const unsigned int* const vals, //INPUT
-               unsigned int* const histo,      //OUPUT
-               int numVals)
-{
-  //TODO fill in this kernel to calculate the histogram
-  //as quickly as possible
+__global__ void yourHisto(const unsigned int *const vals, // INPUT
+                          unsigned int *const histo,      // OUPUT
+                          int numVals) {
+  // TODO fill in this kernel to calculate the histogram
+  // as quickly as possible
 
-  //Although we provide only one kernel skeleton,
-  //feel free to use more if it will help you
-  //write faster code
+  // Although we provide only one kernel skeleton,
+  // feel free to use more if it will help you
+  // write faster code
 }
 
-void computeHistogram(const unsigned int* const d_vals, //INPUT
-                      unsigned int* const d_histo,      //OUTPUT
-                      const unsigned int numBins,
-                      const unsigned int numElems)
-{
-  //TODO Launch the yourHisto kernel
+void computeHistogram(const unsigned int *const d_vals, // INPUT
+                      unsigned int *const d_histo,      // OUTPUT
+                      const unsigned int numBins, const unsigned int numElems) {
+  // TODO Launch the yourHisto kernel
 
-  //if you want to use/launch more than one kernel,
-  //feel free
+  // if you want to use/launch more than one kernel,
+  // feel free
 
-  cudaDeviceSynchronize(); checkCudaErrors(cudaGetLastError());
+  cudaDeviceSynchronize();
+  checkCudaErrors(cudaGetLastError());
 }

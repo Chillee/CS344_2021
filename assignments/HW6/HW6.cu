@@ -7,16 +7,14 @@
 #include "loadSaveImage.h"
 #include <stdio.h>
 
+// return types are void since any internal error will be handled by quitting
+// no point in returning error codes...
+void preProcess(uchar4 **sourceImg, size_t &numRows, size_t &numCols,
+                uchar4 **destImg, uchar4 **blendedImg,
+                const std::string &source_filename,
+                const std::string &dest_filename) {
 
-//return types are void since any internal error will be handled by quitting
-//no point in returning error codes...
-void preProcess( uchar4 **sourceImg,
-                 size_t &numRows,  size_t &numCols,
-                 uchar4 **destImg, 
-                 uchar4 **blendedImg, const std::string& source_filename,
-                 const std::string& dest_filename){
-
-  //make sure the context initializes ok
+  // make sure the context initializes ok
   checkCudaErrors(cudaFree(0));
 
   size_t numRowsSource, numColsSource, numRowsDest, numColsDest;
@@ -31,13 +29,10 @@ void preProcess( uchar4 **sourceImg,
   numCols = numColsSource;
 
   *blendedImg = new uchar4[numRows * numCols];
-
 }
 
-void postProcess(const uchar4* const blendedImg,
-                 const size_t numRowsDest, const size_t numColsDest,
-                 const std::string& output_file)
-{
-  //just need to save the image...
+void postProcess(const uchar4 *const blendedImg, const size_t numRowsDest,
+                 const size_t numColsDest, const std::string &output_file) {
+  // just need to save the image...
   saveImageRGBA(blendedImg, numRowsDest, numColsDest, output_file);
 }

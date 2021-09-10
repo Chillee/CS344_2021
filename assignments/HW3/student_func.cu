@@ -6,7 +6,7 @@
 
   A High Dynamic Range (HDR) image contains a wider variation of intensity
   and color than is allowed by the RGB format with 1 byte per channel that we
-  have used in the previous assignment.  
+  have used in the previous assignment.
 
   To store this extra information we use single precision floating point for
   each channel.  This allows for an extremely wide range of intensity values.
@@ -53,7 +53,7 @@
   Old TV signals used to be transmitted in this way so that black & white
   televisions could display the luminance channel while color televisions would
   display all three of the channels.
-  
+
 
   Tone-mapping
   ============
@@ -81,15 +81,11 @@
 
 #include "utils.h"
 
-void your_histogram_and_prefixsum(const float* const d_logLuminance,
-                                  unsigned int* const d_cdf,
-                                  float &min_logLum,
-                                  float &max_logLum,
-                                  const size_t numRows,
-                                  const size_t numCols,
-                                  const size_t numBins)
-{
-  //TODO
+void your_histogram_and_prefixsum(const float *const d_logLuminance,
+                                  unsigned int *const d_cdf, float &min_logLum,
+                                  float &max_logLum, const size_t numRows,
+                                  const size_t numCols, const size_t numBins) {
+  // TODO
   /*Here are the steps you need to implement
     1) find the minimum and maximum value in the input logLuminance channel
        store in min_logLum and max_logLum
@@ -99,6 +95,4 @@ void your_histogram_and_prefixsum(const float* const d_logLuminance,
     4) Perform an exclusive scan (prefix sum) on the histogram to get
        the cumulative distribution of luminance values (this should go in the
        incoming d_cdf pointer which already has been allocated for you)       */
-
-
 }

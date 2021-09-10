@@ -5,24 +5,23 @@
 #include <stdio.h>
 #include "cuda_runtime.h"
 
-//The caller becomes responsible for the returned pointer. This
-//is done in the interest of keeping this code as simple as possible.
-//In production code this is a bad idea - we should use RAII
-//to ensure the memory is freed.  DO NOT COPY THIS AND USE IN PRODUCTION
-//CODE!!!
-void loadImageHDR(const std::string &filename,
-                  float **imagePtr,
-                  size_t *numRows, size_t *numCols)
-{
-    cv::Mat originImg = cv::imread(filename.c_str(), CV_LOAD_IMAGE_COLOR | CV_LOAD_IMAGE_ANYDEPTH);
+// The caller becomes responsible for the returned pointer. This
+// is done in the interest of keeping this code as simple as possible.
+// In production code this is a bad idea - we should use RAII
+// to ensure the memory is freed.  DO NOT COPY THIS AND USE IN PRODUCTION
+// CODE!!!
+void loadImageHDR(const std::string &filename, float **imagePtr,
+                  size_t *numRows, size_t *numCols) {
+  cv::Mat originImg = cv::imread(filename.c_str(),
+                                 CV_LOAD_IMAGE_COLOR | CV_LOAD_IMAGE_ANYDEPTH);
 
-    cv::Mat image;
+  cv::Mat image;
 
-    if(originImg.type() != CV_32FC3){
-      originImg.convertTo(image,CV_32FC3);
-    } else{
-      image = originImg;
-    }
+  if (originImg.type() != CV_32FC3) {
+    originImg.convertTo(image, CV_32FC3);
+  } else {
+    image = originImg;
+  }
 
   if (image.empty()) {
     std::cerr << "Couldn't open file: " << filename << std::endl;
@@ -49,10 +48,8 @@ void loadImageHDR(const std::string &filename,
   *numCols = image.cols;
 }
 
-void loadImageRGBA(const std::string &filename,
-                   uchar4 **imagePtr,
-                   size_t *numRows, size_t *numCols)
-{
+void loadImageRGBA(const std::string &filename, uchar4 **imagePtr,
+                   size_t *numRows, size_t *numCols) {
   cv::Mat image = cv::imread(filename.c_str(), CV_LOAD_IMAGE_COLOR);
   if (image.empty()) {
     std::cerr << "Couldn't open file: " << filename << std::endl;
@@ -86,26 +83,22 @@ void loadImageRGBA(const std::string &filename,
   *numCols = image.cols;
 }
 
-void saveImageRGBA(const uchar4* const image,
-                   const size_t numRows, const size_t numCols,
-                   const std::string &output_file)
-{
+void saveImageRGBA(const uchar4 *const image, const size_t numRows,
+                   const size_t numCols, const std::string &output_file) {
   int sizes[2];
   sizes[0] = numRows;
   sizes[1] = numCols;
   cv::Mat imageRGBA(2, sizes, CV_8UC4, (void *)image);
   cv::Mat imageOutputBGR;
   cv::cvtColor(imageRGBA, imageOutputBGR, CV_RGBA2BGR);
-  //output the image
+  // output the image
   cv::imwrite(output_file.c_str(), imageOutputBGR);
 }
 
-//output an exr file
-//assumed to already be BGR
-void saveImageHDR(const float* const image,
-                  const size_t numRows, const size_t numCols,
-                  const std::string &output_file)
-{
+// output an exr file
+// assumed to already be BGR
+void saveImageHDR(const float *const image, const size_t numRows,
+                  const size_t numCols, const std::string &output_file) {
   int sizes[2];
   sizes[0] = numRows;
   sizes[1] = numCols;
