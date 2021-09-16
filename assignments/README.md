@@ -20,4 +20,4 @@ The binaries will then be contained within `assignments/bin`.
 # HW1 Passing Instructions
 From the `HW1` directory.
 
-Run `../bin/HW1 HW1/cinque_terre_small.jpg'`
+Run `../bin/HW1 HW1/cinque_terre_small.jpg`
